@@ -1,4 +1,4 @@
-/* 
+/*
  * @copyright (c) 2008, Hedspi, Hanoi University of Technology
  * @author Huu-Duc Nguyen
  * @version 1.0
@@ -9,6 +9,7 @@
 #include "token.h"
 
 typedef enum {
+  ERR_INVALID_MULTI_ASSIGNMENT,
   ERR_END_OF_COMMENT,
   ERR_IDENT_TOO_LONG,
   ERR_INVALID_CONSTANT_CHAR,

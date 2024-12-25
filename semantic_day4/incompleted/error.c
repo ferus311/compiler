@@ -1,4 +1,4 @@
-/* 
+/*
  * @copyright (c) 2008, Hedspi, Hanoi University of Technology
  * @author Huu-Duc Nguyen
  * @version 1.0
@@ -16,6 +16,7 @@ struct ErrorMessage {
 };
 
 struct ErrorMessage errors[29] = {
+  {ERR_INVALID_MULTI_ASSIGNMENT, "Invalid multi assignment."},
   {ERR_END_OF_COMMENT, "End of comment expected."},
   {ERR_IDENT_TOO_LONG, "Identifier too long."},
   {ERR_INVALID_CONSTANT_CHAR, "Invalid char constant."},
@@ -49,7 +50,7 @@ struct ErrorMessage errors[29] = {
 
 void error(ErrorCode err, int lineNo, int colNo) {
   int i;
-  for (i = 0 ; i < NUM_OF_ERRORS; i ++) 
+  for (i = 0 ; i < NUM_OF_ERRORS; i ++)
     if (errors[i].errorCode == err) {
       printf("%d-%d:%s\n", lineNo, colNo, errors[i].message);
       exit(0);

@@ -160,3 +160,19 @@ void checkTypeEquality(Type *type1, Type *type2)
             error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
     }
 }
+
+void checkMultiAssignTypes(Type **lvalueTypes, Type **expTypes, int count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        checkTypeEquality(lvalueTypes[i], expTypes[i]);
+    }
+}
+
+void checkMultiAssignCount(int lvalueCount, int expCount)
+{
+    if (lvalueCount != expCount)
+    {
+        error(ERR_PARAMETERS_ARGUMENTS_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+    }
+}
