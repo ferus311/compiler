@@ -494,6 +494,7 @@ void checkTypesEquality(Type **varList, Type **expList, int num)
         checkTypeEquality(varList[i], expList[i]);
     }
 }
+
 void compileAssignSt(void)
 {
     Type *varList[15];
@@ -522,8 +523,13 @@ void compileAssignSt(void)
         expNum++;
     }
 
-    checkMultiAssignCount(varNum, expNum);
-    checkMultiAssignTypes(varList, expList, varNum);
+    if (varNum == expNum)
+    {
+        checkTypesEquality(varList, expList, varNum);
+    }
+    else
+        error(ERR_INVALID_MULTI_ASSIGNMENT, currentToken->lineNo, currentToken->colNo);
+
 }
 void compileCallSt(void)
 {

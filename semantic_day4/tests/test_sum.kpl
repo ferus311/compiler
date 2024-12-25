@@ -1,9 +1,9 @@
 PROGRAM TestSum;
-VAR x: INTEGER;
+VAR x: CHAR;
     y: integer;
     z: integer;
 BEGIN
-    x := 10;
+    x := 'a';
     y := 20;
     z := sum x, y, 30;
 END.

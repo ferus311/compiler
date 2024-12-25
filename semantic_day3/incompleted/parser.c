@@ -514,7 +514,6 @@ void compileArguments(void) {
   case SB_SEMICOLON:
   case KW_END:
   case KW_ELSE:
-  case KW_SUM:
   case KW_THEN:
     break;
   default:
