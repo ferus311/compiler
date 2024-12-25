@@ -1,4 +1,4 @@
-/* 
+/*
  * @copyright (c) 2008, Hedspi, Hanoi University of Technology
  * @author Huu-Duc Nguyen
  * @version 1.0
@@ -63,19 +63,19 @@ void compileBlock(void) {
 
       // Create a constant object
       constObj = createConstantObject(currentToken->string);
-      
+
       eat(SB_EQ);
       // Get the constant value
       constValue = compileConstant();
       constObj->constAttrs->value = constValue;
-      // Declare the constant object 
+      // Declare the constant object
       declareObject(constObj);
-      
+
       eat(SB_SEMICOLON);
     } while (lookAhead->tokenType == TK_IDENT);
 
     compileBlock2();
-  } 
+  }
   else compileBlock2();
 }
 
@@ -92,19 +92,19 @@ void compileBlock2(void) {
 
       // create a type object
       typeObj = createTypeObject(currentToken->string);
-      
+
       eat(SB_EQ);
       // Get the actual type
       actualType = compileType();
       typeObj->typeAttrs->actualType = actualType;
       // Declare the type object
       declareObject(typeObj);
-      
+
       eat(SB_SEMICOLON);
     } while (lookAhead->tokenType == TK_IDENT);
 
     compileBlock3();
-  } 
+  }
   else compileBlock3();
 }
 
@@ -119,7 +119,7 @@ void compileBlock3(void) {
       eat(TK_IDENT);
       // TODO: Check if a variable identifier is fresh in the block
 
-      // Create a variable object      
+      // Create a variable object
       varObj = createVariableObject(currentToken->string);
 
       eat(SB_COLON);
@@ -128,12 +128,12 @@ void compileBlock3(void) {
       varObj->varAttrs->type = varType;
       // Declare the variable object
       declareObject(varObj);
-      
+
       eat(SB_SEMICOLON);
     } while (lookAhead->tokenType == TK_IDENT);
 
     compileBlock4();
-  } 
+  }
   else compileBlock4();
 }
 
@@ -283,12 +283,12 @@ Type* compileType(void) {
   Object* obj;
 
   switch (lookAhead->tokenType) {
-  case KW_INTEGER: 
+  case KW_INTEGER:
     eat(KW_INTEGER);
     type =  makeIntType();
     break;
-  case KW_CHAR: 
-    eat(KW_CHAR); 
+  case KW_CHAR:
+    eat(KW_CHAR);
     type = makeCharType();
     break;
   case KW_ARRAY:
@@ -318,12 +318,12 @@ Type* compileBasicType(void) {
   Type* type;
 
   switch (lookAhead->tokenType) {
-  case KW_INTEGER: 
-    eat(KW_INTEGER); 
+  case KW_INTEGER:
+    eat(KW_INTEGER);
     type = makeIntType();
     break;
-  case KW_CHAR: 
-    eat(KW_CHAR); 
+  case KW_CHAR:
+    eat(KW_CHAR);
     type = makeCharType();
     break;
   default:
@@ -416,7 +416,7 @@ void compileLValue(void) {
   Object* var;
 
   eat(TK_IDENT);
-  // check if the identifier is a function identifier, or a variable identifier, or a parameter  
+  // check if the identifier is a function identifier, or a variable identifier, or a parameter
   var = checkDeclaredLValueIdent(currentToken->string);
   if (var->kind == OBJ_VARIABLE)
     compileIndexes();
@@ -446,7 +446,7 @@ void compileIfSt(void) {
   compileCondition();
   eat(KW_THEN);
   compileStatement();
-  if (lookAhead->tokenType == KW_ELSE) 
+  if (lookAhead->tokenType == KW_ELSE)
     compileElseSt();
 }
 
@@ -492,10 +492,10 @@ void compileArguments(void) {
       eat(SB_COMMA);
       compileArgument();
     }
-    
+
     eat(SB_RPAR);
     break;
-    // Check FOLLOW set 
+    // Check FOLLOW set
   case SB_TIMES:
   case SB_SLASH:
   case SB_PLUS:
@@ -514,6 +514,7 @@ void compileArguments(void) {
   case SB_SEMICOLON:
   case KW_END:
   case KW_ELSE:
+  case KW_SUM:
   case KW_THEN:
     break;
   default:
@@ -672,7 +673,7 @@ void compileFactor(void) {
     case OBJ_FUNCTION:
       compileArguments();
       break;
-    default: 
+    default:
       error(ERR_INVALID_FACTOR,currentToken->lineNo, currentToken->colNo);
       break;
     }

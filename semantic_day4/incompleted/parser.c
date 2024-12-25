@@ -697,10 +697,27 @@ void compileCondition(void)
     checkTypeEquality(type1, type2);
 }
 
+Type *compileSumExpression(void)
+{
+    Type *type;
+
+    eat(KW_SUM);
+    type = compileExpression();
+    checkIntType(type);
+
+    while (lookAhead->tokenType == SB_COMMA)
+    {
+        eat(SB_COMMA);
+        type = compileExpression();
+        checkIntType(type);
+    }
+
+    return intType;
+}
+
 Type *compileExpression(void)
 {
     Type *type;
-    Type *type1;
 
     switch (lookAhead->tokenType)
     {
@@ -714,16 +731,9 @@ Type *compileExpression(void)
         type = compileExpression2();
         checkIntType(type);
         break;
-    // Bai 1 - De 1
-    //  case KW_IF:
-    //   eat(KW_IF);
-    //   compileCondition();
-    //   eat(KW_THEN);
-    //   type = compileExpression();
-    //   eat(KW_ELSE);
-    //   type1 = compileExpression();
-    //   checkTypeEquality(type, type1);
-    //   break;
+    case KW_SUM:
+        type = compileSumExpression();
+        break;
     default:
         type = compileExpression2();
     }
